@@ -1,3 +1,1 @@
- # nodemodule
- # Ignore W3C DOM Test Suite generated Java files
-/src/org/w3c/domts/
+node_modules
