@@ -1,1 +1,12 @@
 node_modules
+# Node modules
+node_modules/
+
+# W3C DOM tests (if accidentally added)
+src/org/w3c/domts/
+
+# Other common files
+.DS_Store
+.env
+/build
+/dist
