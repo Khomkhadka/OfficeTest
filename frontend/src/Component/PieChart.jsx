@@ -1,12 +1,22 @@
 import React from 'react'
 import { Pie } from "react-chartjs-2"
 import "chart.js/auto"
-import { products } from '../assets/assets'
+import { useContext,useEffect } from 'react'
+import { AuthContext } from "../context/storeContext.jsx";
+// import { products } from '../assets/assets'
 
 const PieChart = () => {
+   const { products, fetchProducts} = useContext(AuthContext)
   const totalQuantity = products.reduce((sum, item) => sum + item.Quantity, 0)
 
+ 
+
+  useEffect(()=>{
+    fetchProducts()
+  },[])
+
   const Pdata = {
+     
     labels: products.map((data) => data.Product),
     datasets: [
       {
@@ -49,6 +59,8 @@ const PieChart = () => {
     }
   }
 
+
+
   return (
     <div className="max-w-full min-w-auto mx-auto bg-white shadow-lg rounded-2xl p-6 mb-6">
       {/* Pie Chart */}
@@ -65,8 +77,8 @@ const PieChart = () => {
           For our products:
           {products.map(p => (
             <span key={p.Product} className="block mt-2">
-              {p.Product} ({p.Category}) sold {p.Quantity} units, generating a revenue of Rs.{p.Revenue}, 
-              which is {((p.Quantity / totalQuantity) * 100).toFixed(1)}% of the total units sold.
+              {p["Product Name"]} ({p.Category}) sold {p["Quantity Sold"]} units, generating a revenue of Rs.{p.Revenue}, 
+             
             </span>
           ))}
           This visualization helps to understand which products contributed the most to overall sales.

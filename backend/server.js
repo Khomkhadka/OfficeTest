@@ -4,6 +4,7 @@ import cors from 'cors';
 import connectDB from './config/mongodb.js';
 import adminRouter from './routes/loginroute.js';
 import userRouter from './routes/upload.route.js';
+import productRoute from './routes/curdroute.js';
 const port = process.env.PORT || 5000;
 
 const app = express();
@@ -21,6 +22,7 @@ app.get('/',(req,res)=>{
 
 app.use("/api/login",adminRouter)
 app.use('/api',userRouter)
+app.use('/api/products',productRoute)
 
 
 app.listen(port,()=>{

@@ -1,9 +1,18 @@
 import React from 'react'
 import { Bar } from "react-chartjs-2"
 import "chart.js/auto"
-import { products } from '../assets/assets'
+// import { products } from '../assets/assets'
+import { useContext,useEffect } from 'react'
+import { AuthContext } from "../context/storeContext.jsx";
+
 
 const BarChart = () => {
+  const { products,fetchProducts } = useContext(AuthContext)
+
+  useEffect(() => {
+   fetchProducts();
+}, []);
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -46,11 +55,11 @@ const BarChart = () => {
   }
 
   const Bdata = {
-    labels: products.map((d) => d.Product),
+    labels: products.map((d) => d["Product Name"]),
     datasets: [
       {
         label: "Quantity Sold",
-        data: products.map((d) => d.Quantity),
+        data: products.map((d) => d["Quantity Sold"]),
         backgroundColor: [
           'rgba(255,99,132,0.5)',
           'rgba(54,162,235,0.5)',
@@ -77,11 +86,11 @@ const BarChart = () => {
             key={p.Product}
             className="bg-gray-100 p-4 rounded-lg shadow hover:shadow-md transition-all"
           >
-            <h3 className="text-lg font-semibold">{p.Product}</h3>
-            <p className="text-gray-700">Quantity Sold: <span className="font-bold">{p.Quantity}</span></p>
-            <p className="text-gray-500 text-sm">{p.Category}</p>
-            <p className="text-gray-500 text-sm">Revenue: ₹{p.Revenue}</p>
-            <p className="text-gray-500 text-sm">Sales Date: {p["Sales-Date"]}</p>
+            <h3 className="text-lg font-semibold">{p["Products Name"]}</h3>
+            <p className="text-gray-700">Quantity Sold: <span className="font-bold">{p["Quantity Sold"]}</span></p>
+            <p className="text-gray-500 text-sm">{p["Category"]}</p>
+            <p className="text-gray-500 text-sm">Revenue: ₹{p["Revenue"]}</p>
+            <p className="text-gray-500 text-sm">Sales Date: {p["Sales Date"]}</p>
           </div>
         ))}
       </div>
@@ -96,7 +105,7 @@ const BarChart = () => {
           {products.map(p => (
             <span key={p.Product}>
               {" "}
-              {p.Product} ({p.Category}) sold {p.Quantity} units on {p["Sales-Date"]}, generating a revenue of ₹{p.Revenue}.
+              {p["Product Name"]} ({p.Category}) sold {p["Quantity Sold"]} units on {p["Sales Date"]}, generating a revenue of Rs.{p.Revenue}.
             </span>
           ))}
           This allows the user to quickly see which product sold the most and compare their sales side by side.
